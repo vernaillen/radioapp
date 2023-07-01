@@ -20,7 +20,7 @@ useHead({
 <template>
   <div>
     <VitePwaManifest />
-    <h1 class="text-xl p-4">Wouter's Radio App</h1>
+    <div class="text-lg text-center pt-2">Wouter's Radio App</div>
     <DemoAnalyzer/>
     <PwaInstallPrompt />
   </div>
