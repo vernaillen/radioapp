@@ -4,6 +4,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "dev:pwa": "VITE_DEV_PWA=true nuxi dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -12,6 +13,7 @@
     "@nuxt/devtools": "latest",
     "@nuxthq/ui": "^2.5.0",
     "@types/node": "^20.3.3",
+    "@vite-pwa/nuxt": "^0.1.0",
     "nuxt": "^3.6.1"
   },
   "dependencies": {
