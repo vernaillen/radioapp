@@ -11,8 +11,8 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     registerWebManifestInRouteRules: true,
     manifest: {
-      name: 'Radio App PWA',
-      short_name: 'RadioAppPWA',
+      name: 'Radio Vernaillen App',
+      short_name: 'RadioVernaillen',
       theme_color: '#000000',
       icons: [
         {
