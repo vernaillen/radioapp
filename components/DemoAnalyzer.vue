@@ -38,10 +38,13 @@ const channels = [
         src: 'https://ice2.somafm.com/beatblender-128-mp3'
     }
 ]
-function switchChannel (src: string) {
+function switchChannel (src: string, name: string) {
     const audioEl = document.getElementById('audio') as HTMLMediaElement
     audioEl.src = src
     audioEl.play()
+    useHead({
+        title: name
+    })
 }
 </script>
 
@@ -49,7 +52,7 @@ function switchChannel (src: string) {
     <main>
         <div class="p-2 text-center ">
             <span v-for="channel in channels" :key="channel.name" class="mr-2 mb-20">
-                <UButton size="xs" @click="switchChannel(channel.src)">
+                <UButton size="xs" @click="switchChannel(channel.src, channel.name)">
                     {{ channel.name }}
                 </UButton>
             </span>
