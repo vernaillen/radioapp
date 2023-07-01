@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     manifest: {
       name: 'Radio App PWA',
       short_name: 'RadioAppPWA',
-      theme_color: '#ffffff',
+      theme_color: '#000000',
       icons: [
         {
           src: 'pwa-192x192.png',

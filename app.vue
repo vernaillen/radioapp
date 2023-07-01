@@ -5,6 +5,11 @@ useHead({
     {
       name: 'description',
       content: 'A simple radio app'
+    },
+    {
+      name: 'theme-color',
+      id: 'theme-color',
+      content: '#000000'
     }
   ],
   link: [
