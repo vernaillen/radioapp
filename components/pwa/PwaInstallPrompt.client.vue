@@ -1,23 +1,19 @@
 <template>
-  {{ $pwa }}
   <div
     v-if="$pwa?.showInstallPrompt && !$pwa?.needRefresh"
-    m-2 p5 bg="primary-fade" relative
-    rounded-lg of-hidden
-    flex="~ col gap-3"
+    class="fixed bottom-0 left-0 right-0 flex flex-col items-center justify-center p-4 bg-gray-500 dark:bg-opacity-50 shadow-xl z-50"
     v-bind="$attrs"
   >
-    <h2 flex="~ gap-2" items-center>
-     Install app
+    <h2 class="mb-2">
+     Install Radio App?
     </h2>
-    <div flex="~ gap-1">
-      <button type="button" btn-solid px-4 py-1 text-center text-sm @click="$pwa.install()">
+    <div>
+      <UButton icon="i-material-symbols-install-desktop-rounded" class="mx-2" @click="$pwa.install()">
         Install
-      </button>
-      <button type="button" btn-text filter-saturate-0 px-4 py-1 text-center text-sm @click="$pwa.cancelInstall()">
+      </UButton>
+      <UButton variant="ghost" class="mx-2" @click="$pwa.cancelInstall()">
         Dismiss
-      </button>
+      </UButton>
     </div>
-    <div i-material-symbols:install-desktop-rounded absolute text-6em bottom--2 inset-ie--2 text-primary dark:text-white op10 class="-z-1 rtl-flip" />
   </div>
 </template>

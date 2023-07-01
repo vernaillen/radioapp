@@ -4,6 +4,9 @@ export default defineNuxtConfig({
     '@nuxthq/ui',
     '@vite-pwa/nuxt'
   ],
+  ui: {
+    icons: ['material-symbols'],
+  },
   pwa: {
     registerType: 'autoUpdate',
     registerWebManifestInRouteRules: true,
