@@ -10,7 +10,11 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "@types/node": "^18",
+    "@nuxthq/ui": "^2.5.0",
+    "@types/node": "^20.3.3",
     "nuxt": "^3.6.1"
+  },
+  "dependencies": {
+    "vite-plugin-vue-audiomotion": "^1.0.0"
   }
 }
