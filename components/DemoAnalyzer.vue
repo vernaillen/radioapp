@@ -35,21 +35,23 @@ const channels = [
         value: 'zenfm',
         src: 'https://22653.live.streamtheworld.com/TOPZEN.mp3?lsid=app:54f1cdd7-7a00-42f8-9df5-64ebe6792dc9'
     },
+    /*
     {
         label: 'StuBru UNTZ',
         value: 'stubruuntz',
         src: 'http://icecast.vrtcdn.be/stubru_untz-high.mp3'
-    },
+    },*/
     {
         label: 'BRUZZ',
         value: 'bruzz',
-        src: 'https://i1.cdn.jetstre.am:8000/sz=fmbrussel=BRUZZ_HQ?token=7d3e91ff8b0e3d7796df296046a43d75&time=64a1955a'
+        src: 'https://i1.cdn.jetstre.am:8000/sz=fmbrussel=BRUZZ_HQ'
     },
+    /*
     {
         label: 'URGent FM',
         value: 'urgentfm',
         src: 'http://urgentstream.radiostudio.be:8000/aac?fbclid=IwAR0UT-WBLUyWbUAmZbwbPExIyY7IDasgTpHbYFTdEUYBT08ARQ4KhxevaAk.mp3'
-    },
+    },*/
     {
         label: 'ORF Radio FM4',
         value: 'orfmf4',
