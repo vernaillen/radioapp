@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { VueAudioMotionAnalyzer } from 'vite-plugin-vue-audiomotion'
+import { useOptionsStore } from '@/stores/options'
 
+const optionsStore = useOptionsStore()
 const audio = ref<HTMLMediaElement>()
 const isPlaying = ref(false)
 onMounted(() => {
@@ -13,22 +15,7 @@ onMounted(() => {
         isPlaying.value = false
     }
 })
-const options = {
-    mode: 5,
-    barSpace: 0.25,
-    gradient: 'rainbow',
-    ledBars: false,
-    lumiBars: false,
-    radial: false,
-    reflexAlpha: 0.25,
-    reflexBright: 1,
-    reflexFit: true,
-    reflexRatio: 0.3,
-    showBgColor: false,
-    showPeaks: true,
-    overlay: false,
-    height: 400
-}
+
 const channels = [
     {
         label: 'ZenFM',
@@ -132,7 +119,7 @@ const channelSrc = computed((channelValue: string) => {
                 </UButton>
             </div>
         </div>
-        <VueAudioMotionAnalyzer :options="options" :source="audio" class="h-1/2" />
-        
+        <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" class="h-1/2" />
+        <PresetSelector />
     </main>
 </template>

@@ -2,6 +2,7 @@
 export default defineNuxtConfig({
   modules: [
     '@nuxthq/ui',
+    '@pinia/nuxt',
     '@vite-pwa/nuxt'
   ],
   ui: {

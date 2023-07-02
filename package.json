@@ -13,9 +13,11 @@
     "@iconify-json/material-symbols": "^1.1.50",
     "@nuxt/devtools": "latest",
     "@nuxthq/ui": "^2.5.0",
+    "@pinia/nuxt": "^0.4.11",
     "@types/node": "^20.3.3",
     "@vite-pwa/nuxt": "^0.1.0",
-    "nuxt": "^3.6.1"
+    "nuxt": "^3.6.1",
+    "pinia": "^2.1.4"
   },
   "dependencies": {
     "vite-plugin-vue-audiomotion": "^1.0.0"
