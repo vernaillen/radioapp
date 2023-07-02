@@ -36,6 +36,36 @@ const channels = [
         src: 'https://22653.live.streamtheworld.com/TOPZEN.mp3?lsid=app:54f1cdd7-7a00-42f8-9df5-64ebe6792dc9'
     },
     {
+        label: 'StuBru UNTZ',
+        value: 'stubruuntz',
+        src: 'http://icecast.vrtcdn.be/stubru_untz-high.mp3'
+    },
+    {
+        label: 'BRUZZ',
+        value: 'bruzz',
+        src: 'https://i1.cdn.jetstre.am:8000/sz=fmbrussel=BRUZZ_HQ?token=7d3e91ff8b0e3d7796df296046a43d75&time=64a1955a'
+    },
+    {
+        label: 'URGent FM',
+        value: 'urgentfm',
+        src: 'http://urgentstream.radiostudio.be:8000/aac?fbclid=IwAR0UT-WBLUyWbUAmZbwbPExIyY7IDasgTpHbYFTdEUYBT08ARQ4KhxevaAk.mp3'
+    },
+    {
+        label: 'ORF Radio FM4',
+        value: 'orfmf4',
+        src: 'https://orf-live.ors-shoutcast.at/fm4-q2a'
+    },
+    {
+        label: 'WEFUNK Radio',
+        value: 'wefunk',
+        src: 'https://s-00.wefunkradio.com:8443/wefunk64.mp3'
+    },
+    {
+        label: 'We House Tunein Radio',
+        value: 'wehousetunein',
+        src: 'https://icecast9.play.cz/zun192.mp3'
+    },
+    {
         label: 'SomaFM Beat Blender',
         value: 'beatblender',
         src: 'https://ice2.somafm.com/beatblender-128-mp3'
@@ -54,31 +84,6 @@ const channels = [
         label: 'SomaFM The Trip',
         value: 'thetrip',
         src: 'https://ice2.somafm.com/thetrip-128-mp3'
-    },
-    { 
-        label: 'SomaFM Drone Zone',
-        value: 'dronezone',
-        src: 'https://ice2.somafm.com/dronezone-128-mp3'
-    }, 
-    {
-        label: 'SomaFM Space Station',
-        value: 'spacestation',
-        src: 'https://ice2.somafm.com/spacestation-128-mp3'
-    },
-    {
-        label: 'SomaFM Deep Space One',
-        value: 'deepspaceone',
-        src: 'https://ice2.somafm.com/deepspaceone-128-mp3'
-    },
-    {
-        label: 'SomaFM Lush',
-        value: 'lush',
-        src: 'https://ice2.somafm.com/lush-128-mp3'
-    },
-    {
-        label: 'SomaFM Secret Agent',
-        value: 'secretagent',
-        src: 'https://ice2.somafm.com/secretagent-128-mp3'
     },
     {
         label: 'SomaFM Illinois Street Lounge',
