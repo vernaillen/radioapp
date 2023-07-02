@@ -103,17 +103,18 @@ const channelSrc = computed((channelValue: string) => {
     }
     return channels[0].src
 })
+optionsStore.updateOptions(usePresets()[0].options)
 </script>
 
 <template>
     <main>
         <audio id="audio" ref="audioRef" :src="channelSrc" crossorigin="anonymous" />
-        <div class="px-2 grid grid-cols-10">
-            <div class="col-span-1">
-                <UButton icon="i-heroicons-play" class="w-8 justify-center" v-if="!isPlaying" @click="audio?.play()"/>
-                <UButton icon="i-heroicons-pause" class="w-8 justify-center" v-if="isPlaying" @click="audio?.pause()"/>
+        <div class="px-2 grid grid-cols-5 mb-4">
+            <div class="col-span-1 text-center">
+                <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="audio?.play()"/>
+                <UButton icon="i-heroicons-pause" class="w-10 justify-center" v-if="isPlaying" @click="audio?.pause()"/>
             </div>
-            <div class="col-span-9">
+            <div class="col-span-4 pr-3">
                 <USelect v-model="channel" :options="channels" color="primary" placeholder="Select channel..." />
             </div>
         </div>

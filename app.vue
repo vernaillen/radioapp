@@ -25,7 +25,7 @@ useHead({
 <template>
   <div>
     <VitePwaManifest />
-    <div class="text-lg p-3">Radio Vernaillen App</div>
+    <div class="text-lg text-center p-2">Radio Vernaillen App</div>
     <DemoAnalyzer/>
     <PwaInstallPrompt />
   </div>
