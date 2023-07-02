@@ -16,10 +16,10 @@ const _useOptions = () => {
       showBgColor: false,
       showPeaks: true,
       overlay: false,
+      height: 350
     }
 
   function updateOptions (newOptions: Options) {
-    console.log('newOptions', newOptions)
     Object.assign(options, newOptions)
   }
 

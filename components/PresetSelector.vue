@@ -27,7 +27,8 @@ watch(optionsStore.options, () => {
       :key="index"
       :value="index"
       :class="selectedPreset === index ? 'opacity-100' : 'opacity-50'"
-      class="mx-2 my-4"
+      size="xs"
+      class="m-1"
       @click="setPreset(index)"
     >
       {{ preset.name }}
