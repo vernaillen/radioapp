@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: 'Radio Vernaillen App',
+  title: 'radio.vernaillen.dev',
   meta: [
     {
       name: 'description',
@@ -25,7 +25,7 @@ useHead({
 <template>
   <div>
     <VitePwaManifest />
-    <div class="text-lg text-center p-2">Radio Vernaillen App</div>
+    <div class="text-lg text-center p-2">radio.vernaillen.dev</div>
     <DemoAnalyzer/>
     <PwaInstallPrompt />
   </div>
