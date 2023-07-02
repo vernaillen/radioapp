@@ -96,19 +96,13 @@ watch(channel, (newVal) => {
         switchChannel(channel.src, channel.label)
     }
 })
-const channelSrc = computed((channelValue: string) => {
-    const channel = channels.find((channel) => channel.value === channelValue)
-    if (channel) {
-        return channel.src
-    }
-    return channels[0].src
-})
+
 optionsStore.updateOptions(usePresets()[4].options)
 </script>
 
 <template>
     <main>
-        <audio id="audio" ref="audioRef" :src="channelSrc" crossorigin="anonymous" />
+        <audio id="audio" ref="audioRef" src="https://icecast9.play.cz/zun192.mp3" crossorigin="anonymous" />
         <div class="px-2 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
                 <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="audio?.play()"/>
