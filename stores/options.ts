@@ -5,7 +5,7 @@ export const useOptionsStore = defineStore('optionsStore', {
   state: () => ({
     options: {
       ...DefaultOptions,
-      height: 350
+      height: 450
     },
   }),
   actions: {

@@ -89,7 +89,7 @@ function switchChannel (src: string, name: string) {
     })
 }
 
-const channel = ref('')
+const channel = ref('wehousetunein')
 watch(channel, (newVal) => {
     const channel = channels.find((channel) => channel.value === newVal)
     if (channel) {
@@ -103,7 +103,7 @@ const channelSrc = computed((channelValue: string) => {
     }
     return channels[0].src
 })
-optionsStore.updateOptions(usePresets()[0].options)
+optionsStore.updateOptions(usePresets()[4].options)
 </script>
 
 <template>

@@ -6,7 +6,7 @@ export const usePresets = () => {
       name: 'Defaults',
       options: {  
         ...DefaultOptions, 
-        height: 350
+        height: 450
       },
     },
     {
@@ -21,7 +21,7 @@ export const usePresets = () => {
         reflexRatio: 0,
         showBgColor: true,
         showPeaks: true,
-        height: 350
+        height: 450
       },
     },
     {
@@ -37,7 +37,7 @@ export const usePresets = () => {
         reflexBright: 1,
         reflexRatio: 0.5,
         showPeaks: false,
-        height: 350
+        height: 450
       },
     },
     {
@@ -52,7 +52,7 @@ export const usePresets = () => {
         showPeaks: true,
         spinSpeed: 1,
         overlay: true,
-        height: 350
+        height: 450
       },
     },
     {
@@ -71,7 +71,7 @@ export const usePresets = () => {
         showBgColor: false,
         showPeaks: true,
         overlay: false,
-        height: 350
+        height: 450
       },
     },
     {
@@ -95,7 +95,7 @@ export const usePresets = () => {
         fillAlpha: 0.6,
         mirror: 1,
         smoothing: 0.9,
-        height: 350
+        height: 450
       },
     }]
 }
