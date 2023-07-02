@@ -1,6 +1,6 @@
 <script setup lang="ts">
 useHead({
-  title: 'Wouter\'s Radio App',
+  title: 'Radio Vernaillen App',
   meta: [
     {
       name: 'description',
@@ -25,7 +25,7 @@ useHead({
 <template>
   <div>
     <VitePwaManifest />
-    <div class="text-lg text-center pt-2">Wouter's Radio App</div>
+    <div class="text-lg text-center pt-2">Radio Vernaillen App</div>
     <DemoAnalyzer/>
     <PwaInstallPrompt />
   </div>
