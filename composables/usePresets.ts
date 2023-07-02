@@ -1,10 +1,13 @@
-import { DefaultOptions, Options } from 'vite-plugin-vue-audiomotion'
+import { DefaultOptions } from 'vite-plugin-vue-audiomotion'
 
 export const usePresets = () => {
   return [
     {
       name: 'Defaults',
-      options: DefaultOptions,
+      options: {  
+        ...DefaultOptions, 
+        height: 350
+      },
     },
     {
       name: 'Classic LEDs',

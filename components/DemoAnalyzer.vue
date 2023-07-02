@@ -89,7 +89,7 @@ function switchChannel (src: string, name: string) {
     })
 }
 
-const channel = ref('zenfm')
+const channel = ref('')
 watch(channel, (newVal) => {
     const channel = channels.find((channel) => channel.value === newVal)
     if (channel) {
@@ -107,16 +107,14 @@ const channelSrc = computed((channelValue: string) => {
 
 <template>
     <main>
-        <div class="p-2 text-center">
-            <USelect v-model="channel" :options="channels" color="primary" placeholder="Select channel..." />
-            <audio id="audio" ref="audioRef" :src="channelSrc" crossorigin="anonymous" />
-            <div class="mt-2">
-                <UButton size="xs" v-if="!isPlaying" @click="audio?.play()">
-                    Play
-                </UButton>
-                <UButton size="xs" v-if="isPlaying" @click="audio?.pause()">
-                    Pause
-                </UButton>
+        <audio id="audio" ref="audioRef" :src="channelSrc" crossorigin="anonymous" />
+        <div class="px-2 grid grid-cols-10">
+            <div class="col-span-1">
+                <UButton icon="i-heroicons-play" class="w-8 justify-center" v-if="!isPlaying" @click="audio?.play()"/>
+                <UButton icon="i-heroicons-pause" class="w-8 justify-center" v-if="isPlaying" @click="audio?.pause()"/>
+            </div>
+            <div class="col-span-9">
+                <USelect v-model="channel" :options="channels" color="primary" placeholder="Select channel..." />
             </div>
         </div>
         <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" class="h-1/2" />
