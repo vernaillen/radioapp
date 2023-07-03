@@ -2,11 +2,13 @@
 import { onMounted, ref } from 'vue'
 import { VueAudioMotionAnalyzer } from 'vite-plugin-vue-audiomotion'
 import { useOptionsStore } from '@/stores/options'
+import { useWakeLock } from '@vueuse/core'
 
 const optionsStore = useOptionsStore()
 const audio = ref<HTMLMediaElement>()
 const isPlaying = ref(false)
 const fullScreen = ref(false)
+const wakeLock = reactive(useWakeLock())
 
 function switchChannel (src: string, name: string) {
     const audioEl = document.getElementById('audio') as HTMLMediaElement
@@ -29,9 +31,11 @@ onMounted(() => {
     audio.value = document.getElementById('audio') as HTMLMediaElement
     audio.value.onplaying = () => {
         isPlaying.value = true
+        wakeLock.request('screen')
     }
     audio.value.onpause = () => {
         isPlaying.value = false
+        wakeLock.release()
     }
 })
 optionsStore.updateOptions(usePresets()[4].options)
