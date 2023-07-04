@@ -8,6 +8,10 @@ export default defineNuxtConfig({
   ui: {
     icons: ['material-symbols'],
   },
+  colorMode: {
+    preference: 'dark',
+    classSuffix: ''
+  },
   pwa: {
     registerType: 'autoUpdate',
     registerWebManifestInRouteRules: true,

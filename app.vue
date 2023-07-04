@@ -25,8 +25,7 @@ useHead({
 <template>
   <div>
     <VitePwaManifest />
-    <div class="text-lg text-center p-2">radio.vernaillen.dev</div>
-    <DemoAnalyzer/>
+    <NuxtPage />
     <PwaInstallPrompt />
   </div>
 </template>

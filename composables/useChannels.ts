@@ -1,4 +1,6 @@
-export const useChannels = () => {
+import { RadioChannel } from 'types'
+
+export const useChannels = (): RadioChannel[] => {
     return [
         {
             label: 'ZenFM',
@@ -63,4 +65,8 @@ export const useChannels = () => {
             src: 'https://ice6.somafm.com/illstreet-128-mp3'
         }
     ]
+}
+
+export function getChannel(name: string): RadioChannel | undefined {
+    return useChannels().find((channel) => channel.value === name)
 }
