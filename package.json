@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "@iconify-json/material-symbols": "^1.1.50",
-    "@nuxt/devtools": "^0.6.7",
+    "@nuxt/devtools": "^0.7.0",
     "@nuxthq/ui": "^2.5.0",
     "@pinia/nuxt": "^0.4.11",
     "@types/node": "^20.4.1",
