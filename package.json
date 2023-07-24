@@ -10,13 +10,13 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "^1.1.50",
-    "@nuxt/devtools": "^0.6.7",
-    "@nuxthq/ui": "^2.5.0",
+    "@iconify-json/material-symbols": "^1.1.52",
+    "@nuxt/devtools": "^0.7.1",
+    "@nuxthq/ui": "^2.6.0",
     "@pinia/nuxt": "^0.4.11",
-    "@types/node": "^20.4.1",
+    "@types/node": "^20.4.4",
     "@vite-pwa/nuxt": "^0.1.0",
-    "nuxt": "^3.6.2",
+    "nuxt": "^3.6.5",
     "pinia": "^2.1.4"
   },
   "dependencies": {
