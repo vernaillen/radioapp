@@ -10,14 +10,14 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "^1.1.58",
-    "@nuxt/devtools": "^0.8.3",
-    "@nuxt/ui": "^2.8.1",
-    "@pinia/nuxt": "^0.4.11",
-    "@types/node": "^20.6.2",
+    "@iconify-json/material-symbols": "^1.1.59",
+    "@nuxt/devtools": "1.0.0-beta.1",
+    "@nuxt/ui": "^2.9.0",
+    "@pinia/nuxt": "^0.5.0",
+    "@types/node": "^20.8.6",
     "@vite-pwa/nuxt": "^0.1.1",
-    "nuxt": "^3.7.3",
-    "pinia": "^2.1.6"
+    "nuxt": "^3.7.4",
+    "pinia": "^2.1.7"
   },
   "dependencies": {
     "vite-plugin-vue-audiomotion": "^1.0.3"
