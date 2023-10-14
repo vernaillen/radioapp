@@ -20,8 +20,8 @@ devDependencies:
     specifier: ^2.8.1
     version: 2.8.1(rollup@2.79.1)(vue@3.3.4)(webpack@5.88.2)
   '@pinia/nuxt':
-    specifier: ^0.4.11
-    version: 0.4.11(rollup@2.79.1)(vue@3.3.4)
+    specifier: ^0.5.0
+    version: 0.5.0(rollup@2.79.1)(vue@3.3.4)
   '@types/node':
     specifier: ^20.6.2
     version: 20.6.3
@@ -2483,11 +2483,11 @@ packages:
       '@parcel/watcher-win32-x64': 2.3.0
     dev: true
 
-  /@pinia/nuxt@0.4.11(rollup@2.79.1)(vue@3.3.4):
-    resolution: {integrity: sha512-bhuNFngJpmBCdAqWguezNJ/oJFR7wvKieqiZrmmdmPR07XjsidAw8RLXHMZE9kUm32M9E6T057OBbG/22jERTg==}
+  /@pinia/nuxt@0.5.0(rollup@2.79.1)(vue@3.3.4):
+    resolution: {integrity: sha512-p9Ojw+H2dp5l6A1TFLwl03kQZuuO7cjEtppnwjEjkQA6y8SitpiarmogouFTks1hOSXPjMfXPDTW0vRV+wSxVg==}
     dependencies:
       '@nuxt/kit': 3.7.3(rollup@2.79.1)
-      pinia: 2.1.6(vue@3.3.4)
+      pinia: 2.1.7(vue@3.3.4)
     transitivePeerDependencies:
       - '@vue/composition-api'
       - rollup
@@ -7263,6 +7263,23 @@ packages:
 
   /pinia@2.1.6(vue@3.3.4):
     resolution: {integrity: sha512-bIU6QuE5qZviMmct5XwCesXelb5VavdOWKWaB17ggk++NUwQWWbP5YnsONTk3b752QkW9sACiR81rorpeOMSvQ==}
+    peerDependencies:
+      '@vue/composition-api': ^1.4.0
+      typescript: '>=4.4.4'
+      vue: ^2.6.14 || ^3.3.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+      typescript:
+        optional: true
+    dependencies:
+      '@vue/devtools-api': 6.5.0
+      vue: 3.3.4
+      vue-demi: 0.14.6(vue@3.3.4)
+    dev: true
+
+  /pinia@2.1.7(vue@3.3.4):
+    resolution: {integrity: sha512-+C2AHFtcFqjPih0zpYuvof37SFxMQ7OEG2zV9jRI12i9BOy3YQVAHwdKtyyc8pDcDyIc33WCIsZaCFWU7WWxGQ==}
     peerDependencies:
       '@vue/composition-api': ^1.4.0
       typescript: '>=4.4.4'

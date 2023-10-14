@@ -13,7 +13,7 @@
     "@iconify-json/material-symbols": "^1.1.58",
     "@nuxt/devtools": "^0.8.3",
     "@nuxt/ui": "^2.8.1",
-    "@pinia/nuxt": "^0.4.11",
+    "@pinia/nuxt": "^0.5.0",
     "@types/node": "^20.6.2",
     "@vite-pwa/nuxt": "^0.1.1",
     "nuxt": "^3.7.3",
