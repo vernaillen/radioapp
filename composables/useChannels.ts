@@ -1,18 +1,47 @@
-import { RadioChannel } from 'types'
+import type { RadioChannel } from '~/types'
 
 export const useChannels = (): RadioChannel[] => {
     return [
+        {
+            label: 'Radio 1',
+            value: 'radio1',
+            src: 'https://quantumcast.vrtcdn.be/radio1/mp3-128'
+        },
+        {
+            label: 'Radio 1 Classics',
+            value: 'radio1classics',
+            src: 'https://quantumcast.vrtcdn.be/radio1_classics/mp3-128'
+        },
+        {
+            label: 'Radio 2 Oost-Vlaanderen',
+            value: 'radio2',
+            src: 'https://quantumcast.vrtcdn.be/ra2ovl/mp3-128'
+        },
+        {
+            label: 'StuBru',
+            value: 'studbru',
+            src: 'https://quantumcast.vrtcdn.be/stubru/mp3-128'
+        },
+        {
+            label: 'StuBru De Tijdloze',
+            value: 'studbrutijdloze',
+            src: 'https://quantumcast.vrtcdn.be/stubru_tijdloze/mp3-128'
+        },
+        {
+            label: 'StuBru UNTZ',
+            value: 'stubruuntz',
+            src: 'https://quantumcast.vrtcdn.be/stubru_untz/mp3-128'
+        },
+        {
+            label: 'Willy',
+            value: 'willy',
+            src: 'https://icecast-qmusicbe-cdp.triple-it.nl/willy.mp3'
+        },
         {
             label: 'ZenFM',
             value: 'zenfm',
             src: 'https://22653.live.streamtheworld.com/TOPZEN.mp3?lsid=app:54f1cdd7-7a00-42f8-9df5-64ebe6792dc9'
         },
-        /*
-        {
-            label: 'StuBru UNTZ',
-            value: 'stubruuntz',
-            src: 'http://icecast.vrtcdn.be/stubru_untz-high.mp3'
-        },*/
         {
             label: 'BRUZZ',
             value: 'bruzz',
