@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { VueAudioMotionAnalyzer } from 'vite-plugin-vue-audiomotion'
 import { useOptionsStore } from '@/stores/options'
 import { useWakeLock } from '@vueuse/core'
-import { RadioChannel } from 'types';
+import type { RadioChannel } from '~/types';
 
 const optionsStore = useOptionsStore()
 const audio = ref<HTMLMediaElement>()
