@@ -5,12 +5,13 @@ import { useOptionsStore } from '@/stores/options'
 import { useWakeLock } from '@vueuse/core'
 import type { RadioChannel } from '~/types';
 
+const startChannel = 'radio1'
 const optionsStore = useOptionsStore()
 const audio = ref<HTMLMediaElement>()
 const isPlaying = ref(false)
 const fullScreen = ref(false)
 const wakeLock = reactive(useWakeLock())
-const channelKey = ref('wehousetunein')
+const channelKey = ref(startChannel)
 
 function switchChannel (key: string, startPlaying: boolean) {
     const channel: RadioChannel = getChannel(key)
@@ -21,10 +22,15 @@ function switchChannel (key: string, startPlaying: boolean) {
         useHead({
             title: channel.label
         })
+        channelKey.value = key
     }
 }
 function triggerSwitchChannel () {
     switchChannel(channelKey.value, true)
+}
+function loadNextChannel () {
+    const nextChannelKey = nextChannel(channelKey.value)
+    if (nextChannelKey) switchChannel(nextChannelKey.value, true)
 }
 const channelLabel = computed(() => {
     const channel = getChannel(channelKey.value)
@@ -41,20 +47,26 @@ onMounted(() => {
         isPlaying.value = false
         wakeLock.release()
     }
-    // set Reflex Bars as default preset
-    optionsStore.updateOptions(usePresets()[4].options)
+    optionsStore.updateOptions(usePresets()[3].options)
     // set default channel
-    switchChannel('wehousetunein', false)
+    switchChannel(startChannel, false)
+
+    window.addEventListener("keypress", e => {
+        if (e.code === 'Space') {
+            if (isPlaying.value) audio.value?.pause()
+            else audio.value?.play()
+        }
+    });
 })
 </script>
 
 <template>
     <main>
         <div class="text-lg text-center p-2">{{ channelLabel }}</div>
-        <audio id="audio" ref="audioRef" src="https://icecast9.play.cz/zun192.mp3" crossorigin="anonymous" />
+        <audio id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
         <div class="px-2 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
-                <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="audio?.play()"/>
+                <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="audio?.play()" @keydown.enter="console.log('enytered')"/>
                 <UButton icon="i-heroicons-pause" class="w-10 justify-center" v-if="isPlaying" @click="audio?.pause()"/>
             </div>
             <div class="col-span-3">
@@ -67,10 +79,10 @@ onMounted(() => {
                     placeholder="Select channel..." />
             </div>
             <div class="col-span-1 text-center">
-                <UButton icon="i-material-symbols-fullscreen" class="w-10 justify-center" @click="fullScreen = !fullScreen"/>
+                <UButton icon="i-material-symbols-chevron-right" class="w-10 justify-center" @click="loadNextChannel()"/>
             </div>
         </div>
-        <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" class="h-1/2" :full-screen="fullScreen" />
+        <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
         <PresetSelector />
     </main>
 </template>

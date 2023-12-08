@@ -1,3 +1,4 @@
+import { channel } from 'diagnostics_channel'
 import type { RadioChannel } from '~/types'
 
 export const useChannels = (): RadioChannel[] => {
@@ -19,7 +20,7 @@ export const useChannels = (): RadioChannel[] => {
         },
         {
             label: 'StuBru',
-            value: 'studbru',
+            value: 'stubru',
             src: 'https://quantumcast.vrtcdn.be/stubru/mp3-128'
         },
         {
@@ -98,4 +99,13 @@ export const useChannels = (): RadioChannel[] => {
 
 export function getChannel(name: string): RadioChannel | undefined {
     return useChannels().find((channel) => channel.value === name)
+}
+
+export function nextChannel(prevChannelName: string): RadioChannel | undefined {
+    const prevIndex = useChannels().findIndex(channel => {
+        if (channel.value === prevChannelName) return channel
+    });
+    const nextIndex = prevIndex === useChannels().length -1 ? 0 : prevIndex + 1
+    const newChannel: RadioChannel = useChannels()[nextIndex]
+    return newChannel
 }
