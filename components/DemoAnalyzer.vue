@@ -83,6 +83,9 @@ onMounted(() => {
             </div>
         </div>
         <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
+        <div class="mt-2 text-center">
+            <UButton icon="i-material-symbols-fullscreen" size="xs" @click="fullScreen= !fullScreen"/>
+        </div>
         <PresetSelector />
     </main>
 </template>
