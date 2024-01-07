@@ -5,7 +5,7 @@ import { useOptionsStore } from '@/stores/options'
 import { useWakeLock } from '@vueuse/core'
 import type { RadioChannel } from '~/types';
 
-const startChannel = 'radio1'
+const startChannel = 'zenfm'
 const optionsStore = useOptionsStore()
 const audio = ref<HTMLMediaElement>()
 const isPlaying = ref(false)
