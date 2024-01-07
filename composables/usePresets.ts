@@ -1,4 +1,4 @@
-import { DefaultOptions } from 'vite-plugin-vue-audiomotion'
+import { DefaultOptions, type ChannelLayout } from 'vite-plugin-vue-audiomotion'
 
 export const usePresets = () => {
   return [
@@ -97,5 +97,32 @@ export const usePresets = () => {
         smoothing: 0.9,
         height: 450
       },
-    }]
+    },
+    {
+      name: 'Smooth Circle',
+      options: {
+        barSpace: 0,
+        gradient: 'rainbow',
+        splitGradient: true,
+        alphaBars: false,
+        ledBars: false,
+        lumiBars: true,
+        radial: true,
+        reflexAlpha: 0.25,
+        reflexBright: 1,
+        reflexFit: true,
+        reflexRatio: 0.3,
+        showBgColor: false,
+        showPeaks: false,
+        showScaleX: true,
+        overlay: false,
+        lineWidth: 2,
+        fillAlpha: 0.5,
+        mode: 10,
+        mirror: 1,
+        smoothing: 0.8,
+        channelLayout: 'dual-vertical' as ChannelLayout,
+        height: 450
+      },
+    },]
 }
