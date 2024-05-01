@@ -15,7 +15,7 @@
     "@nuxt/ui": "^2.15.0",
     "@pinia/nuxt": "^0.5.1",
     "@types/node": "^20.11.30",
-    "@vite-pwa/nuxt": "^0.6.0",
+    "@vite-pwa/nuxt": "^0.7.0",
     "nuxt": "^3.11.1",
     "pinia": "^2.1.7"
   },
