@@ -41,7 +41,8 @@ export const useChannels = (): RadioChannel[] => {
         {
             label: 'ZenFM',
             value: 'zenfm',
-            src: 'https://22653.live.streamtheworld.com/TOPZEN.mp3?lsid=app:54f1cdd7-7a00-42f8-9df5-64ebe6792dc9'
+            src: 'https://27873.live.streamtheworld.com/TOPZEN.mp3?dist=website?lsid=app:adbc632a-bb9c-46e3-b3dc-f4df5e2cb586'
+            // src: 'https://22653.live.streamtheworld.com/TOPZEN.mp3?lsid=app:54f1cdd7-7a00-42f8-9df5-64ebe6792dc9'
         },
         {
             label: 'BRUZZ',
