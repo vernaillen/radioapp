@@ -1,17 +1,19 @@
-
 export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     '@pinia/nuxt',
     '@vite-pwa/nuxt'
   ],
+
   ui: {
     icons: ['material-symbols'],
   },
+
   colorMode: {
     preference: 'dark',
     classSuffix: ''
   },
+
   pwa: {
     registerType: 'autoUpdate',
     registerWebManifestInRouteRules: true,
@@ -55,5 +57,7 @@ export default defineNuxtConfig({
       type: 'module',
     },
   },
-  devtools: { enabled: true }
+
+  devtools: { enabled: true },
+  compatibilityDate: '2024-10-19'
 })
