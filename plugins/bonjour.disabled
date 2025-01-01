@@ -1,0 +1,9 @@
+import Bonjour from 'bonjour-service'
+
+export default defineNuxtPlugin((nuxtApp) => {
+    const bonjour = new Bonjour()
+    bonjour.find({ type: 'googlecast' }, (service) => {
+        console.log(`found chromecast: "${service.name}" at ${service.addresses?.[0]}`)
+        bonjour.destroy()
+    })
+})

@@ -60,11 +60,11 @@ export const useChannels = (): RadioChannel[] => {
             value: 'orfmf4',
             src: 'https://orf-live.ors-shoutcast.at/fm4-q2a'
         },
-        {
+        /*{
             label: 'WEFUNK Radio',
             value: 'wefunk',
             src: 'https://s-00.wefunkradio.com:8443/wefunk64.mp3'
-        },
+        },*/
         {
             label: 'We House Tunein Radio',
             value: 'wehousetunein',

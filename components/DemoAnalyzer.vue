@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue'
 import { VueAudioMotionAnalyzer } from 'vite-plugin-vue-audiomotion'
 import { useOptionsStore } from '@/stores/options'
 import { useWakeLock } from '@vueuse/core'
-import type { RadioChannel } from '~/types';
+import type { RadioChannel } from '~/types'
 
 const startChannel = 'zenfm'
 const optionsStore = useOptionsStore()
@@ -13,12 +13,15 @@ const fullScreen = ref(false)
 const wakeLock = reactive(useWakeLock())
 const channelKey = ref(startChannel)
 
-function switchChannel (key: string, startPlaying: boolean) {
-    const channel: RadioChannel = getChannel(key)
+async function switchChannel (key: string, startPlaying: boolean) {
+    const channel: RadioChannel | undefined = getChannel(key)
     if (channel) {
         const audioEl = document.getElementById('audio') as HTMLMediaElement
         audioEl.src = channel.src
-        if (startPlaying) audioEl.play()
+        console.log('changing channel:', channel.label)
+        if (startPlaying) { 
+            playAudio()
+        }
         useHead({
             title: channel.label
         })
@@ -36,6 +39,10 @@ const channelLabel = computed(() => {
     const channel = getChannel(channelKey.value)
     return channel ? channel.label : 'no channel loaded'
 })
+function playAudio () {
+    audio.value?.play()
+    $fetch('/api/chromecast', { method: 'POST', body: { src: audio.value?.src } })
+}
 
 onMounted(() => {
     audio.value = document.getElementById('audio') as HTMLMediaElement
@@ -54,7 +61,7 @@ onMounted(() => {
     window.addEventListener("keypress", e => {
         if (e.code === 'Space') {
             if (isPlaying.value) audio.value?.pause()
-            else audio.value?.play()
+            else playAudio()
         }
     });
 })
@@ -66,7 +73,7 @@ onMounted(() => {
         <audio id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
         <div class="px-2 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
-                <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="audio?.play()" @keydown.enter="console.log('enytered')"/>
+                <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="playAudio()"/>
                 <UButton icon="i-heroicons-pause" class="w-10 justify-center" v-if="isPlaying" @click="audio?.pause()"/>
             </div>
             <div class="col-span-3">
