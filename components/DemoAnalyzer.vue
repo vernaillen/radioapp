@@ -50,7 +50,7 @@ const channelLabel = computed(() => {
 })
 function playAudio () {
     audio.value?.play()
-    if (castjs && castjs.value.available) {
+    if (castjs.value && castjs.value.available) {
         console.log('loading castjs stream:', audio.value?.src)
         castjs.value.cast(audio.value?.src);
         isPlaying.value = true
@@ -60,7 +60,7 @@ function playAudio () {
 }
 function pauseAudio () {
     audio.value?.pause()
-    if (castjs && castjs.value.available) {
+    if (castjs.value && castjs.value.available) {
         castjs.value.pause(); 
         isPlaying.value = false
     } 
@@ -68,6 +68,8 @@ function pauseAudio () {
 
 onMounted(() => {
     castjs.value = new Castjs();
+    console.log('castjs object:', castjs.value)
+    console.log('castjs available:', castjs.value.available)
     audio.value = document.getElementById('audio') as HTMLMediaElement
     if (audio.value) {
         audio.value.onplaying = () => {
@@ -89,7 +91,7 @@ onMounted(() => {
             else playAudio()
         }
     });
-    if(castjs?.value?.available) {
+    if(castjs.value?.available) {
         castjs.value.on('playing', () => {
             isPlaying.value = true
             volume.value = castjs.value.volumeLevel
@@ -111,7 +113,7 @@ onMounted(() => {
 
 <template>
     <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
-    <main v-if="castjs && castjs.available">
+    <main v-if="castjs">
         <div class="text-lg text-center p-2">{{ channelLabel }}</div>
         <div class="px-2 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
