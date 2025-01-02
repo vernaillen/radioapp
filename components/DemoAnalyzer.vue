@@ -5,12 +5,11 @@ import { useOptionsStore } from '@/stores/options'
 import { useWakeLock } from '@vueuse/core'
 import type { RadioChannel } from '~/types'
 
-const castjs = useScript('https://cdnjs.cloudflare.com/ajax/libs/castjs/5.3.0/cast.min.js', {
-  bundle: true
+useHead({
+    script: [
+        { src: 'https://cdnjs.cloudflare.com/ajax/libs/castjs/5.3.0/cast.min.js' }
+    ]
 })
-if (castjs && castjs.available) {
-  console.log('castjs loaded')
-}
 
 const startChannel = 'zenfm'
 const optionsStore = useOptionsStore()
@@ -19,6 +18,7 @@ const isPlaying = ref(false)
 const fullScreen = ref(false)
 const wakeLock = reactive(useWakeLock())
 const channelKey = ref(startChannel)
+const castjs = ref<any>()
 
 const volume = ref(0)
 const device = ref('')
@@ -26,6 +26,8 @@ const device = ref('')
 async function switchChannel (key: string, startPlaying: boolean) {
     const channel: RadioChannel | undefined = getChannel(key)
     if (channel) {
+        const audioEl = document.getElementById('audio') as HTMLMediaElement
+        audioEl.src = channel.src
         if (startPlaying) { 
             playAudio()
         }
@@ -48,20 +50,25 @@ const channelLabel = computed(() => {
 })
 function playAudio () {
     audio.value?.play()
-    if (castjs && castjs.available) {
-        castjs.cast(audio.value?.src);
+    console.log('start playing')
+    if (castjs && castjs.value.available) {
+        console.log('castjs available:', audio.value?.src)
+        castjs.value.cast(audio.value?.src);
         isPlaying.value = true
-    } 
+    } else {
+        console.log('castjs not available')
+    }
 }
 function pauseAudio () {
     audio.value?.pause()
-    if (castjs && castjs.available) {
-        castjs.pause(); 
+    if (castjs && castjs.value.available) {
+        castjs.value.pause(); 
         isPlaying.value = false
     } 
 }
 
 onMounted(() => {
+    castjs.value = new Castjs();
     audio.value = document.getElementById('audio') as HTMLMediaElement
     if (audio.value) {
         audio.value.onplaying = () => {
@@ -83,30 +90,30 @@ onMounted(() => {
             else playAudio()
         }
     });
-    if(castjs?.available) {
-        castjs.on('playing', () => {
+    if(castjs?.value?.available) {
+        castjs.value.on('playing', () => {
             isPlaying.value = true
-            volume.value = castjs.volumeLevel
+            volume.value = castjs.value.volumeLevel
             wakeLock.request('screen')
         })
-        castjs.on('paused', () => {
+        castjs.value.on('paused', () => {
             isPlaying.value = false
             wakeLock.release()
         })
-        castjs.on('volumechange', () => {
-            volume.value = castjs.volumeLevel
+        castjs.value.on('volumechange', () => {
+            volume.value = castjs.value.volumeLevel
         })
-        castjs.on('connect', () => {
-            device.value = castjs.device
+        castjs.value.on('connect', () => {
+            device.value = castjs.value.device
         })
     }
 })
 </script>
 
 <template>
+    <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
     <main v-if="castjs && castjs.available">
         <div class="text-lg text-center p-2">{{ channelLabel }}</div>
-        <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
         <div class="px-2 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
                 <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="playAudio"/>
