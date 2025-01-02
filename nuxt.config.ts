@@ -2,7 +2,8 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/ui',
     '@pinia/nuxt',
-    '@vite-pwa/nuxt'
+    '@vite-pwa/nuxt',
+    '@nuxt/scripts'
   ],
 
   ui: {
@@ -12,6 +13,14 @@ export default defineNuxtConfig({
   colorMode: {
     preference: 'dark',
     classSuffix: ''
+  },
+
+  scripts: {
+    globals: {
+      cast: {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/castjs/5.3.0/cast.min.js',
+      }
+    }
   },
 
   pwa: {

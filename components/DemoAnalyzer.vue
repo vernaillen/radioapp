@@ -5,6 +5,13 @@ import { useOptionsStore } from '@/stores/options'
 import { useWakeLock } from '@vueuse/core'
 import type { RadioChannel } from '~/types'
 
+const castjs = useScript('https://cdnjs.cloudflare.com/ajax/libs/castjs/5.3.0/cast.min.js', {
+  bundle: true
+})
+if (castjs && castjs.available) {
+  console.log('castjs loaded')
+}
+
 const startChannel = 'zenfm'
 const optionsStore = useOptionsStore()
 const audio = ref<HTMLMediaElement>()
@@ -13,20 +20,12 @@ const fullScreen = ref(false)
 const wakeLock = reactive(useWakeLock())
 const channelKey = ref(startChannel)
 
-useHead({
-  script: [
-    { src: 'https://cdnjs.cloudflare.com/ajax/libs/castjs/5.3.0/cast.min.js' }
-  ]
-})
-const cjs = ref<any>()
 const volume = ref(0)
 const device = ref('')
 
 async function switchChannel (key: string, startPlaying: boolean) {
     const channel: RadioChannel | undefined = getChannel(key)
     if (channel) {
-        const audioEl = document.getElementById('audio') as HTMLMediaElement
-        audioEl.src = channel.src
         if (startPlaying) { 
             playAudio()
         }
@@ -48,29 +47,31 @@ const channelLabel = computed(() => {
     return channel ? channel.label : 'no channel loaded'
 })
 function playAudio () {
-    //audio.value?.play()
-    if (cjs.value?.available) {
-        cjs.value.cast(audio.value?.src);
+    audio.value?.play()
+    if (castjs && castjs.available) {
+        castjs.cast(audio.value?.src);
         isPlaying.value = true
     } 
 }
 function pauseAudio () {
-    //audio.value?.pause()
-    if (cjs.value && cjs.value.available) {
-        cjs.value.pause(); 
+    audio.value?.pause()
+    if (castjs && castjs.available) {
+        castjs.pause(); 
         isPlaying.value = false
     } 
 }
 
 onMounted(() => {
     audio.value = document.getElementById('audio') as HTMLMediaElement
-    audio.value.onplaying = () => {
-        isPlaying.value = true
-        wakeLock.request('screen')
-    }
-    audio.value.onpause = () => {
-        isPlaying.value = false
-        wakeLock.release()
+    if (audio.value) {
+        audio.value.onplaying = () => {
+            isPlaying.value = true
+            wakeLock.request('screen')
+        }
+        audio.value.onpause = () => {
+            isPlaying.value = false
+            wakeLock.release()
+        }
     }
     optionsStore.updateOptions(usePresets()[3].options)
     // set default channel
@@ -82,29 +83,28 @@ onMounted(() => {
             else playAudio()
         }
     });
-    cjs.value = new Castjs();
-    if(cjs.value?.available) {
-        cjs.value.on('playing', () => {
+    if(castjs?.available) {
+        castjs.on('playing', () => {
             isPlaying.value = true
-            volume.value = cjs.value.volumeLevel
+            volume.value = castjs.volumeLevel
             wakeLock.request('screen')
         })
-        cjs.value.on('paused', () => {
+        castjs.on('paused', () => {
             isPlaying.value = false
             wakeLock.release()
         })
-        cjs.value.on('volumechange', () => {
-            volume.value = cjs.value.volumeLevel
+        castjs.on('volumechange', () => {
+            volume.value = castjs.volumeLevel
         })
-        cjs.value.on('connect', () => {
-            device.value = cjs.value.device
+        castjs.on('connect', () => {
+            device.value = castjs.device
         })
     }
 })
 </script>
 
 <template>
-    <main>
+    <main v-if="castjs && castjs.available">
         <div class="text-lg text-center p-2">{{ channelLabel }}</div>
         <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
         <div class="px-2 grid grid-cols-5 mb-4">
@@ -131,7 +131,7 @@ onMounted(() => {
         <div class="mt-2 text-center">
             <UMeter class="w-96 mx-auto justify-center" :value="volume * 100" indicator />
         </div>
-        <VueAudioMotionAnalyzer v-if="cjs" :options="optionsStore.options" :source="cjs" :full-screen="fullScreen" />
+        <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
         <div class="mt-2 text-center">
             <UButton icon="i-material-symbols-fullscreen" size="xs" @click="fullScreen= !fullScreen"/>
         </div>
