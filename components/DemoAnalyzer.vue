@@ -48,14 +48,14 @@ const channelLabel = computed(() => {
     return channel ? channel.label : 'no channel loaded'
 })
 function playAudio () {
-    audio.value?.play()
-    if (cjs.value && cjs.value.available) {
+    //audio.value?.play()
+    if (cjs.value?.available) {
         cjs.value.cast(audio.value?.src);
         isPlaying.value = true
     } 
 }
 function pauseAudio () {
-    audio.value?.pause()
+    //audio.value?.pause()
     if (cjs.value && cjs.value.available) {
         cjs.value.pause(); 
         isPlaying.value = false
@@ -83,7 +83,7 @@ onMounted(() => {
         }
     });
     cjs.value = new Castjs();
-    if(cjs.value && cjs.value.available) {
+    if(cjs.value?.available) {
         cjs.value.on('playing', () => {
             isPlaying.value = true
             volume.value = cjs.value.volumeLevel
@@ -106,7 +106,7 @@ onMounted(() => {
 <template>
     <main>
         <div class="text-lg text-center p-2">{{ channelLabel }}</div>
-        <audio id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
+        <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
         <div class="px-2 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
                 <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="playAudio"/>
@@ -131,7 +131,7 @@ onMounted(() => {
         <div class="mt-2 text-center">
             <UMeter class="w-96 mx-auto justify-center" :value="volume * 100" indicator />
         </div>
-        <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
+        <VueAudioMotionAnalyzer v-if="cjs" :options="optionsStore.options" :source="cjs" :full-screen="fullScreen" />
         <div class="mt-2 text-center">
             <UButton icon="i-material-symbols-fullscreen" size="xs" @click="fullScreen= !fullScreen"/>
         </div>
