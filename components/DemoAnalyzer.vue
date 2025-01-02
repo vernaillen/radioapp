@@ -41,7 +41,7 @@ const channelLabel = computed(() => {
 })
 function playAudio () {
     audio.value?.play()
-    $fetch('/api/chromecast', { method: 'POST', body: { src: audio.value?.src } })
+    // $fetch('/api/chromecast', { method: 'POST', body: { src: audio.value?.src } })
 }
 
 onMounted(() => {
