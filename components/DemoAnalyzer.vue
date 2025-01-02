@@ -19,6 +19,8 @@ useHead({
   ]
 })
 const cjs = ref<any>()
+const volume = ref(0)
+const device = ref('')
 
 async function switchChannel (key: string, startPlaying: boolean) {
     const channel: RadioChannel | undefined = getChannel(key)
@@ -46,14 +48,14 @@ const channelLabel = computed(() => {
     return channel ? channel.label : 'no channel loaded'
 })
 function playAudio () {
-    // audio.value?.play()
+    audio.value?.play()
     if (cjs.value && cjs.value.available) {
         cjs.value.cast(audio.value?.src);
         isPlaying.value = true
     } 
 }
 function pauseAudio () {
-    // audio.value?.pause()
+    audio.value?.pause()
     if (cjs.value && cjs.value.available) {
         cjs.value.pause(); 
         isPlaying.value = false
@@ -84,11 +86,18 @@ onMounted(() => {
     if(cjs.value && cjs.value.available) {
         cjs.value.on('playing', () => {
             isPlaying.value = true
+            volume.value = cjs.value.volumeLevel
             wakeLock.request('screen')
         })
         cjs.value.on('paused', () => {
             isPlaying.value = false
             wakeLock.release()
+        })
+        cjs.value.on('volumechange', () => {
+            volume.value = cjs.value.volumeLevel
+        })
+        cjs.value.on('connect', () => {
+            device.value = cjs.value.device
         })
     }
 })
@@ -116,8 +125,11 @@ onMounted(() => {
                 <UButton icon="i-material-symbols-chevron-right" class="w-10 justify-center" @click="loadNextChannel()"/>
             </div>
         </div>
-        <div v-if="cjs && cjs.value && cjs.value.available">
-            {{ cjs.value.device }}
+        <div v-if="device" class="mt-2 text-center">
+            {{ device }}
+        </div>
+        <div class="mt-2 text-center">
+            <UMeter class="w-96 mx-auto justify-center" :value="volume * 100" indicator />
         </div>
         <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
         <div class="mt-2 text-center">
