@@ -50,9 +50,8 @@ const channelLabel = computed(() => {
 })
 function playAudio () {
     audio.value?.play()
-    console.log('start playing')
     if (castjs && castjs.value.available) {
-        console.log('castjs available:', audio.value?.src)
+        console.log('loading castjs stream:', audio.value?.src)
         castjs.value.cast(audio.value?.src);
         isPlaying.value = true
     } else {
