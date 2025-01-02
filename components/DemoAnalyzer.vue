@@ -112,7 +112,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
+    <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" controls />
     <main v-if="castjs">
         <div class="text-lg text-center p-2">{{ channelLabel }}</div>
         <div class="px-2 grid grid-cols-5 mb-4">
@@ -133,8 +133,11 @@ onMounted(() => {
                 <UButton icon="i-material-symbols-chevron-right" class="w-10 justify-center" @click="loadNextChannel()"/>
             </div>
         </div>
+        <div v-if="castjs" class="mt-2 text-center">
+            castjs available: {{ castjs.available }}
+        </div>
         <div v-if="device" class="mt-2 text-center">
-            {{ device }}
+            device: {{ device }}
         </div>
         <div class="mt-2 text-center">
             <UMeter class="w-96 mx-auto justify-center" :value="volume * 100" indicator />
