@@ -13,7 +13,12 @@ const fullScreen = ref(false)
 const wakeLock = reactive(useWakeLock())
 const channelKey = ref(startChannel)
 
-const cjs = new Castjs();
+useHead({
+  script: [
+    { src: 'https://cdnjs.cloudflare.com/ajax/libs/castjs/5.3.0/cast.min.js' }
+  ]
+})
+const cjs = ref<any>()
 
 async function switchChannel (key: string, startPlaying: boolean) {
     const channel: RadioChannel | undefined = getChannel(key)
@@ -43,8 +48,8 @@ const channelLabel = computed(() => {
 })
 function playAudio () {
     audio.value?.play()
-    if (cjs.available) {
-        cjs.cast(audio.value?.src);
+    if (cjs.value && cjs.value.available) {
+        cjs.value.cast(audio.value?.src);
     } 
 }
 
@@ -68,6 +73,7 @@ onMounted(() => {
             else playAudio()
         }
     });
+    cjs.value = new Castjs();
 })
 </script>
 
