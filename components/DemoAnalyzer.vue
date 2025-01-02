@@ -61,7 +61,7 @@ function playAudio () {
 function pauseAudio () {
     audio.value?.pause()
     if (castjs.value && castjs.value.available) {
-        castjs.value.disconnect(); 
+        castjs.value.pause(); 
         isPlaying.value = false
     } 
 }
@@ -71,6 +71,12 @@ function setVolume (event: any) {
     if (castjs.value && castjs.value.available) {
         castjs.value.volume(event)
     }
+}
+function disconnect () {
+    audio.value?.pause()
+    castjs.value?.disconnect();
+    device.value = ''
+    isPlaying.value = false
 }
 
 onMounted(() => {
@@ -119,10 +125,11 @@ onMounted(() => {
 <template>
     <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" controls />
     <main v-if="castjs">
-        <div class="px-2 grid grid-cols-5 mb-4">
+        <div class="px-0 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
-                <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="playAudio"/>
-                <UButton icon="i-heroicons-pause" class="w-10 justify-center" v-if="isPlaying" @click="pauseAudio"/>
+                <UButton icon="i-heroicons-play" class="w-7 justify-center" size="xs" v-if="!isPlaying" @click="playAudio"/>
+                <UButton icon="i-heroicons-pause" class="w-7 justify-center" size="xs" v-if="isPlaying" @click="pauseAudio"/>
+                <UButton icon="i-heroicons-stop" class="w-7 justify-center ml-1" size="xs" @click="disconnect"/>
             </div>
             <div class="col-span-3">
                 <USelect 
@@ -134,15 +141,16 @@ onMounted(() => {
                     placeholder="Select channel..." />
             </div>
             <div class="col-span-1 text-center">
-                <UButton icon="i-material-symbols-chevron-right" class="w-10 justify-center" @click="loadNextChannel()"/>
+                <UButton icon="i-material-symbols-chevron-right" class="w-7 justify-center" size="xs" @click="loadNextChannel()"/>
             </div>
         </div>
-        <div v-if="device" class="mt-4 text-center text-sm">
-            connected to: {{ device }}
+        <div class="mt-4 text-center text-sm">
+            <UIcon :name="device ? 'i-material-symbols-cast-connected' : 'i-material-symbols-cast-outline'" class="w-5 h-5 -mb-1 mr-1" /> {{ device }}
         </div>
         <div class="w-80 mt-2 mx-auto justify-center items-center text-center">
             <UMeter class="w-80" :value="volume * 100" indicator />
             <URange class="w-80" :min="0" :max="1" :step="0.01" :value="volume" @change="setVolume(Number($event))" />
+            {{ castjs.available }}
         </div>
         <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
         <div class="mt-2 text-center">
