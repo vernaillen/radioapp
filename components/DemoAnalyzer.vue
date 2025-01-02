@@ -13,6 +13,8 @@ const fullScreen = ref(false)
 const wakeLock = reactive(useWakeLock())
 const channelKey = ref(startChannel)
 
+const cjs = new Castjs();
+
 async function switchChannel (key: string, startPlaying: boolean) {
     const channel: RadioChannel | undefined = getChannel(key)
     if (channel) {
@@ -41,7 +43,9 @@ const channelLabel = computed(() => {
 })
 function playAudio () {
     audio.value?.play()
-    // $fetch('/api/chromecast', { method: 'POST', body: { src: audio.value?.src } })
+    if (cjs.available) {
+        cjs.cast(audio.value?.src);
+    } 
 }
 
 onMounted(() => {
