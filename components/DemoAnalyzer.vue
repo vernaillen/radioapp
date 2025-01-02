@@ -25,7 +25,6 @@ async function switchChannel (key: string, startPlaying: boolean) {
     if (channel) {
         const audioEl = document.getElementById('audio') as HTMLMediaElement
         audioEl.src = channel.src
-        console.log('changing channel:', channel.label)
         if (startPlaying) { 
             playAudio()
         }
@@ -47,9 +46,17 @@ const channelLabel = computed(() => {
     return channel ? channel.label : 'no channel loaded'
 })
 function playAudio () {
-    audio.value?.play()
+    // audio.value?.play()
     if (cjs.value && cjs.value.available) {
         cjs.value.cast(audio.value?.src);
+        isPlaying.value = true
+    } 
+}
+function pauseAudio () {
+    // audio.value?.pause()
+    if (cjs.value && cjs.value.available) {
+        cjs.value.pause(); 
+        isPlaying.value = false
     } 
 }
 
@@ -74,6 +81,16 @@ onMounted(() => {
         }
     });
     cjs.value = new Castjs();
+    if(cjs.value && cjs.value.available) {
+        cjs.value.on('playing', () => {
+            isPlaying.value = true
+            wakeLock.request('screen')
+        })
+        cjs.value.on('paused', () => {
+            isPlaying.value = false
+            wakeLock.release()
+        })
+    }
 })
 </script>
 
@@ -83,8 +100,8 @@ onMounted(() => {
         <audio id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
         <div class="px-2 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
-                <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="playAudio()"/>
-                <UButton icon="i-heroicons-pause" class="w-10 justify-center" v-if="isPlaying" @click="audio?.pause()"/>
+                <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="playAudio"/>
+                <UButton icon="i-heroicons-pause" class="w-10 justify-center" v-if="isPlaying" @click="pauseAudio"/>
             </div>
             <div class="col-span-3">
                 <USelect 
@@ -98,6 +115,9 @@ onMounted(() => {
             <div class="col-span-1 text-center">
                 <UButton icon="i-material-symbols-chevron-right" class="w-10 justify-center" @click="loadNextChannel()"/>
             </div>
+        </div>
+        <div v-if="cjs && cjs.value && cjs.value.available">
+            {{ cjs.value.device }}
         </div>
         <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
         <div class="mt-2 text-center">
