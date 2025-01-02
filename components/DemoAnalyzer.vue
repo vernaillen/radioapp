@@ -20,7 +20,7 @@ const wakeLock = reactive(useWakeLock())
 const channelKey = ref(startChannel)
 const castjs = ref<any>()
 
-const volume = ref(0)
+const volume = ref<number>(0.4)
 const device = ref('')
 
 async function switchChannel (key: string, startPlaying: boolean) {
@@ -61,9 +61,16 @@ function playAudio () {
 function pauseAudio () {
     audio.value?.pause()
     if (castjs.value && castjs.value.available) {
-        castjs.value.pause(); 
+        castjs.value.disconnect(); 
         isPlaying.value = false
     } 
+}
+function setVolume (event: any) {
+    console.log('setVolume', event)
+    volume.value = event
+    if (castjs.value && castjs.value.available) {
+        castjs.value.volume(event)
+    }
 }
 
 onMounted(() => {
@@ -94,19 +101,17 @@ onMounted(() => {
     if(castjs.value?.available) {
         castjs.value.on('playing', () => {
             isPlaying.value = true
-            volume.value = castjs.value.volumeLevel
+            volume.value = Number(castjs.value.volumeLevel)
+            device.value = castjs.value.device
             wakeLock.request('screen')
         })
         castjs.value.on('paused', () => {
             isPlaying.value = false
             wakeLock.release()
         })
-        castjs.value.on('volumechange', () => {
-            volume.value = castjs.value.volumeLevel
-        })
-        castjs.value.on('connect', () => {
-            device.value = castjs.value.device
-        })
+        /*castjs.value.on('volumechange', () => {
+            volume.value = castjs.value.volumeLevel.parseInt()
+        })*/
     }
 })
 </script>
@@ -114,7 +119,6 @@ onMounted(() => {
 <template>
     <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" controls />
     <main v-if="castjs">
-        <div class="text-lg text-center p-2">{{ channelLabel }}</div>
         <div class="px-2 grid grid-cols-5 mb-4">
             <div class="col-span-1 text-center">
                 <UButton icon="i-heroicons-play" class="w-10 justify-center" v-if="!isPlaying" @click="playAudio"/>
@@ -133,14 +137,12 @@ onMounted(() => {
                 <UButton icon="i-material-symbols-chevron-right" class="w-10 justify-center" @click="loadNextChannel()"/>
             </div>
         </div>
-        <div v-if="castjs" class="mt-2 text-center">
-            castjs available: {{ castjs.available }}
+        <div v-if="device" class="mt-4 text-center text-sm">
+            connected to: {{ device }}
         </div>
-        <div v-if="device" class="mt-2 text-center">
-            device: {{ device }}
-        </div>
-        <div class="mt-2 text-center">
-            <UMeter class="w-96 mx-auto justify-center" :value="volume * 100" indicator />
+        <div class="w-80 mt-2 mx-auto justify-center items-center text-center">
+            <UMeter class="w-80" :value="volume * 100" indicator />
+            <URange class="w-80" :min="0" :max="1" :step="0.01" :value="volume" @change="setVolume(Number($event))" />
         </div>
         <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
         <div class="mt-2 text-center">

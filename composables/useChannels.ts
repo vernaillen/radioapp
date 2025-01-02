@@ -94,6 +94,16 @@ export const useChannels = (): RadioChannel[] => {
             label: 'SomaFM Illinois Street Lounge',
             value: 'illinoisstreetlounge',
             src: 'https://ice6.somafm.com/illstreet-128-mp3'
+        },
+        {
+            label: 'Perfect New Age',
+            value: 'perfectnewage',
+            src: 'https://n0e.radiojar.com/cxases7nabuvv?rj-ttl=5&rj-tok=AAABlCgq1YsANP3-MA3oVuyLjw'
+        },
+        {
+            label: 'Zen Garden - My Noise',
+            value: 'zengardenmynoise',
+            src: 'https://zengarden-mynoise.radioca.st/stream'
         }
     ]
 }
