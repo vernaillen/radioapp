@@ -71,6 +71,9 @@ function setVolume (event: any) {
     if (castjs.value && castjs.value.available) {
         castjs.value.volume(event)
     }
+    if (audio.value) {
+        audio.value.volume = event
+    }
 }
 function disconnect () {
     audio.value?.pause()
@@ -80,9 +83,6 @@ function disconnect () {
 }
 
 onMounted(() => {
-    castjs.value = new Castjs();
-    console.log('castjs object:', castjs.value)
-    console.log('castjs available:', castjs.value.available)
     audio.value = document.getElementById('audio') as HTMLMediaElement
     if (audio.value) {
         audio.value.onplaying = () => {
@@ -104,6 +104,9 @@ onMounted(() => {
             else playAudio()
         }
     });
+    castjs.value = new Castjs();
+    console.log('castjs object:', castjs.value)
+    console.log('castjs available:', castjs.value.available)
     if(castjs.value?.available) {
         castjs.value.on('playing', () => {
             isPlaying.value = true
@@ -145,12 +148,15 @@ onMounted(() => {
             </div>
         </div>
         <div class="mt-4 text-center text-sm">
-            <UIcon :name="device ? 'i-material-symbols-cast-connected' : 'i-material-symbols-cast-outline'" class="w-5 h-5 -mb-1 mr-1" /> {{ device }}
+            <NuxtLink v-if="castjs.available" @click="playAudio">
+                <UIcon :name="device ? 'i-material-symbols-cast-connected' : 'i-material-symbols-cast-outline'" class="w-5 h-5 mr-1 -mb-1 cursor-pointer" />
+            </NuxtLink>
+            {{ device ? device : 'no device connected' }} 
+            <UIcon name="i-material-symbols-volume-up" class="w-5 h-5 ml-5 mr-1 -mb-1" />
+            {{ volume * 100 }}%
         </div>
-        <div class="w-80 mt-2 mx-auto justify-center items-center text-center">
-            <UMeter class="w-80" :value="volume * 100" indicator />
-            <URange class="w-80" :min="0" :max="1" :step="0.01" :value="volume" @change="setVolume(Number($event))" />
-            {{ castjs.available }}
+        <div class="w-64 mt-2 mx-auto">
+            <URange class="w-full" :min="0" :max="1" :step="0.01" :value="volume" @change="setVolume(Number($event))" />
         </div>
         <VueAudioMotionAnalyzer :options="optionsStore.options" :source="audio" :full-screen="fullScreen" />
         <div class="mt-2 text-center">
