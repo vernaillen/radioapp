@@ -15,6 +15,7 @@ const startChannel = 'zenfm'
 const optionsStore = useOptionsStore()
 const audio = ref<HTMLMediaElement>()
 const isPlaying = ref(false)
+const isCastingConnected = ref(false)
 const fullScreen = ref(false)
 const wakeLock = reactive(useWakeLock())
 const channelKey = ref(startChannel)
@@ -49,29 +50,26 @@ const channelLabel = computed(() => {
     return channel ? channel.label : 'no channel loaded'
 })
 function playAudio () {
-    audio.value?.play()
-    if (castjs.value && castjs.value.available) {
-        console.log('loading castjs stream:', audio.value?.src)
+    if (isCastingConnected.value && castjs.value && castjs.value.available) {
         castjs.value.cast(audio.value?.src);
-        isPlaying.value = true
     } else {
-        console.log('castjs not available')
+        audio.value?.play()
     }
+    isPlaying.value = true
 }
 function pauseAudio () {
-    audio.value?.pause()
-    if (castjs.value && castjs.value.available) {
+    if (isCastingConnected.value && castjs.value && castjs.value.available) {
         castjs.value.pause(); 
-        isPlaying.value = false
-    } 
+    } else {
+        audio.value?.pause()
+    }
+    isPlaying.value = false
 }
 function setVolume (event: any) {
-    console.log('setVolume', event)
     volume.value = event
-    if (castjs.value && castjs.value.available) {
+    if (isCastingConnected.value && castjs.value && castjs.value.available) {
         castjs.value.volume(event)
-    }
-    if (audio.value) {
+    } else if (audio.value) {
         audio.value.volume = event
     }
 }
@@ -80,6 +78,22 @@ function disconnect () {
     castjs.value?.disconnect();
     device.value = ''
     isPlaying.value = false
+    isCastingConnected.value = false
+}
+function toggleCasting () {
+    if (isCastingConnected.value) {
+        castjs.value.disconnect();
+        device.value = ''
+        isCastingConnected.value = false
+        if (isPlaying.value) {
+            audio.value?.play()
+        }
+    } else {
+        castjs.value.cast(audio.value?.src);
+        audio.value?.pause()
+        isCastingConnected.value = true
+        isPlaying.value = true
+    }
 }
 
 onMounted(() => {
@@ -126,9 +140,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" controls />
+    <audio class="mx-auto" id="audio" ref="audioRef" src="https://quantumcast.vrtcdn.be/radio1/mp3-128" crossorigin="anonymous" />
     <main v-if="castjs">
-        <div class="px-0 grid grid-cols-5 mb-4">
+        <div class="px-0 grid grid-cols-5 mt-8 mb-4">
             <div class="col-span-1 text-center">
                 <UButton icon="i-heroicons-play" class="w-7 justify-center" size="xs" v-if="!isPlaying" @click="playAudio"/>
                 <UButton icon="i-heroicons-pause" class="w-7 justify-center" size="xs" v-if="isPlaying" @click="pauseAudio"/>
@@ -148,7 +162,7 @@ onMounted(() => {
             </div>
         </div>
         <div class="mt-4 text-center text-sm">
-            <NuxtLink v-if="castjs.available" @click="playAudio">
+            <NuxtLink v-if="castjs.available" @click="toggleCasting">
                 <UIcon :name="device ? 'i-material-symbols-cast-connected' : 'i-material-symbols-cast-outline'" class="w-5 h-5 mr-1 -mb-1 cursor-pointer" />
             </NuxtLink>
             {{ device ? device : 'no device connected' }} 

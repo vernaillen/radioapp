@@ -4,6 +4,11 @@ import type { RadioChannel } from '~/types'
 export const useChannels = (): RadioChannel[] => {
     return [
         {
+            label: 'BBC 6 Music',
+            value: 'bbc6music',
+            src: 'https://as-hls-ww.live.cf.md.bbci.co.uk/pool_81827798/live/ww/bbc_6music/bbc_6music.isml/bbc_6music-audio%3d96000.norewind.m3u8'
+        },
+        {
             label: 'Radio 1',
             value: 'radio1',
             src: 'https://quantumcast.vrtcdn.be/radio1/mp3-128'
@@ -41,8 +46,7 @@ export const useChannels = (): RadioChannel[] => {
         {
             label: 'ZenFM',
             value: 'zenfm',
-            src: 'https://27873.live.streamtheworld.com/TOPZEN.mp3?dist=website?lsid=app:adbc632a-bb9c-46e3-b3dc-f4df5e2cb586'
-            // src: 'https://22653.live.streamtheworld.com/TOPZEN.mp3?lsid=app:54f1cdd7-7a00-42f8-9df5-64ebe6792dc9'
+            src: 'https://25553.live.streamtheworld.com/TOPZEN.mp3?dist=website?lsid=app:adbc632a-bb9c-46e3-b3dc-f4df5e2cb586'
         },
         {
             label: 'BRUZZ',
