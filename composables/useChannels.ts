@@ -1,4 +1,3 @@
-import { channel } from 'diagnostics_channel'
 import type { RadioChannel } from '~/types'
 
 export const useChannels = (): RadioChannel[] => {
