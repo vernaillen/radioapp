@@ -21,5 +21,6 @@
   },
   "dependencies": {
     "vite-plugin-vue-audiomotion": "^1.0.5"
-  }
+  },
+  "packageManager": "pnpm@10.13.1"
 }
